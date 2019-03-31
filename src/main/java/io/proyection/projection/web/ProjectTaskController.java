@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/boards")
 @CrossOrigin
 public class ProjectTaskController {
 
@@ -39,7 +39,7 @@ public class ProjectTaskController {
         return new ResponseEntity<ProjectTask>(newPT, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<ProjectTask> getAllPTs() {
         return projectTaskService.findAll();
     }

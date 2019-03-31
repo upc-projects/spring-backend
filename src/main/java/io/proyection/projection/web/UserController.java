@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @CrossOrigin
 public class UserController {
 
@@ -39,7 +39,7 @@ public class UserController {
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<User> getAllUsers() {
         return userService.findAll();
     }

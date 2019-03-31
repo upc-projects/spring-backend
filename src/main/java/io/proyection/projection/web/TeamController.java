@@ -44,15 +44,15 @@ public class TeamController {
         return teamService.findAll();
     }
 
-    @GetMapping("/{t_id}")
-    public ResponseEntity<?> getTeamById(@PathVariable Long t_id){
-        Team team = teamService.findById((t_id));
+    @GetMapping("/{team_id}")
+    public ResponseEntity<?> getTeamById(@PathVariable Long team_id){
+        Team team = teamService.findById((team_id));
         return new ResponseEntity<Team>(team, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{t_id}")
-    public ResponseEntity<?> deleteTeam(@PathVariable Long t_id){
-        teamService.delete(t_id);
+    @DeleteMapping("/{team_id}")
+    public ResponseEntity<?> deleteTeam(@PathVariable Long team_id){
+        teamService.delete(team_id);
 
         return new ResponseEntity<String>("Team deleted", HttpStatus.OK);
     }

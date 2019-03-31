@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/team")
+@RequestMapping("/api/teams")
 @CrossOrigin
 public class TeamController {
 
@@ -39,7 +39,7 @@ public class TeamController {
         return new ResponseEntity<Team>(newTeam, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<Team> getAllTeams() {
         return teamService.findAll();
     }

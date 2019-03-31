@@ -44,15 +44,15 @@ public class ProjectController {
         return projectService.findAll();
     }
 
-    @GetMapping("/{p_id}")
-    public ResponseEntity<?> getProjectById(@PathVariable Long p_id){
-        Project project = projectService.findById((p_id));
+    @GetMapping("/{project_id}")
+    public ResponseEntity<?> getProjectById(@PathVariable Long project_id){
+        Project project = projectService.findById((project_id));
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{p_id}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long p_id){
-        projectService.delete(p_id);
+    @DeleteMapping("/{project_id}")
+    public ResponseEntity<?> deleteProject(@PathVariable Long project_id){
+        projectService.delete(project_id);
 
         return new ResponseEntity<String>("Project deleted", HttpStatus.OK);
     }

@@ -44,15 +44,15 @@ public class ProjectTaskController {
         return projectTaskService.findAll();
     }
 
-    @GetMapping("/{pt_id}")
-    public ResponseEntity<?> getPTById(@PathVariable Long pt_id){
-        ProjectTask projectTask = projectTaskService.findById((pt_id));
+    @GetMapping("/{projectTask_id}")
+    public ResponseEntity<?> getPTById(@PathVariable Long projectTask_id){
+        ProjectTask projectTask = projectTaskService.findById((projectTask_id));
         return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{pt_id}")
-    public ResponseEntity<?> deleteProjectTask(@PathVariable Long pt_id){
-        projectTaskService.delete(pt_id);
+    @DeleteMapping("/{projectTask_id}")
+    public ResponseEntity<?> deleteProjectTask(@PathVariable Long projectTask_id){
+        projectTaskService.delete(projectTask_id);
 
         return new ResponseEntity<String>("Project Task deleted", HttpStatus.OK);
     }

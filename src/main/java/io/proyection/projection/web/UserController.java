@@ -44,15 +44,15 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/{u_id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long u_id){
-        User user = userService.findById((u_id));
+    @GetMapping("/{user_id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long user_id){
+        User user = userService.findById((user_id));
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{u_id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long u_id){
-        userService.delete(u_id);
+    @DeleteMapping("/{user_id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long user_id){
+        userService.delete(user_id);
 
         return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }

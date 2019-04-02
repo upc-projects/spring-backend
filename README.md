@@ -25,6 +25,7 @@ This a API-first approach for the project.
   For example: `config/mavenDependenciesUpdate`
 
 After the work in your branch is finished, PR to `develop` branch.
-#### :warning: ALERT : Don´t push to `master` branch by any means. Seek guidance.:crystal_ball:
+#### :warning: ALERT : Don´t push to `master` branch by any means. Seek for guidance.:crystal_ball:
 Todo => How to protect master branch.
+
 Todo => Include the application.properties file in the .gitignore

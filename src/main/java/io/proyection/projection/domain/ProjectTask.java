@@ -20,6 +20,7 @@ public class ProjectTask {
     private Date dateCreated;
     private String modifiedBy;
     private Date modifiedDate;
+    private Date limitDate;
     private boolean done = false;
 
     @ManyToOne
@@ -108,4 +109,8 @@ public class ProjectTask {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public Date getLimitDate(){return limitDate;}
+
+    public void setLimitDate(Date limitDate) { this.limitDate = limitDate; }
 }

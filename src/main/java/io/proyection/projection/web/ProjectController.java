@@ -1,7 +1,6 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.Project;
-import io.proyection.projection.domain.User;
 import io.proyection.projection.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,20 +56,4 @@ public class ProjectController {
 
         return new ResponseEntity<String>("Project deleted", HttpStatus.OK);
     }
-
-    @PostMapping("/addUser/{user_id}")
-    public ResponseEntity<?> addUser(@PathVariable Long user_id, BindingResult result) {
-        if(result.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
-
-            for(FieldError error: result.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
-       Project project = projectService.addUser(user_id);
-       return new ResponseEntity<Project>(project, HttpStatus.CREATED);
-    }
-
 }

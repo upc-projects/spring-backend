@@ -10,5 +10,7 @@ Then create the `application.properties` inside `src/main/resources` file with t
 `spring.datasource.password=YOUR_DB_PASSWORD`  
 `spring.jpa.hibernate.ddl-auto=update`  
 `spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver`  
-`spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect`
+`spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect`
+
+
   

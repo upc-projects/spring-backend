@@ -1,7 +1,9 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.Project;
+import io.proyection.projection.domain.User;
 import io.proyection.projection.service.ProjectService;
+import io.proyection.projection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +23,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("")
     public ResponseEntity<?> addProject(@Valid @RequestBody Project project, BindingResult result) {
@@ -56,4 +62,16 @@ public class ProjectController {
 
         return new ResponseEntity<String>("Project deleted", HttpStatus.OK);
     }
+
+    @RequestMapping("add_user")
+    public ResponseEntity<?> addUser(@RequestBody HashMap<String,String> mapper){
+
+        Long user_id = Long.parseLong(mapper.get("user_id"));
+        Long project_id = Long.parseLong(mapper.get("project_id"));
+
+        projectService.addUser(user_id,project_id);
+
+        return new ResponseEntity<String>("Project added an User", HttpStatus.OK);
+    }
+
 }

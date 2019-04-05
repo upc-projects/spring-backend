@@ -2,8 +2,8 @@ package io.proyection.projection.web;
 
 import io.proyection.projection.domain.Team;
 import io.proyection.projection.domain.User;
-import io.proyection.projection.service.TeamService;
-import io.proyection.projection.service.UserService;
+import io.proyection.projection.service.ITeamService;
+import io.proyection.projection.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,9 @@ import java.util.Map;
 public class TeamController {
 
     @Autowired
-    private TeamService teamService;
+    private ITeamService teamService;
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @PostMapping("")
     public ResponseEntity<?> addTeam(@Valid @RequestBody Team team, BindingResult result) {

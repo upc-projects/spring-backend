@@ -1,7 +1,7 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.ProjectTask;
-import io.proyection.projection.service.ProjectTaskService;
+import io.proyection.projection.service.IProjectTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class ProjectTaskController {
 
     @Autowired
-    private ProjectTaskService projectTaskService;
+    private IProjectTaskService projectTaskService;
 
     @PostMapping("")
     public ResponseEntity<?> addPTToBoard(@Valid @RequestBody ProjectTask projectTask, BindingResult result) {

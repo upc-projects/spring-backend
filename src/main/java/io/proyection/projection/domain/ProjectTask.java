@@ -15,7 +15,7 @@ public class ProjectTask {
     @NotBlank(message ="Summary cannot be blank")
     private String summary;
     private String acceptanceCriteria;
-    private String status;
+    private int status;
     private String createdBy;
     private Date dateCreated;
     private String modifiedBy;
@@ -54,11 +54,11 @@ public class ProjectTask {
         this.acceptanceCriteria = acceptanceCriteria;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

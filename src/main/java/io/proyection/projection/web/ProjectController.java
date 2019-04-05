@@ -1,9 +1,8 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.Project;
-import io.proyection.projection.domain.User;
-import io.proyection.projection.service.ProjectService;
-import io.proyection.projection.service.UserService;
+import io.proyection.projection.service.IProjectService;
+import io.proyection.projection.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +21,10 @@ import java.util.Map;
 public class ProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    private IProjectService projectService;
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @PostMapping("")
     public ResponseEntity<?> addProject(@Valid @RequestBody Project project, BindingResult result) {

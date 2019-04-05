@@ -1,7 +1,7 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.User;
-import io.proyection.projection.service.UserService;
+import io.proyection.projection.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @PostMapping("")
     public ResponseEntity<?> addUser(@Valid @RequestBody User user, BindingResult result) {

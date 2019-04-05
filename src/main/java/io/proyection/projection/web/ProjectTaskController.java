@@ -56,4 +56,14 @@ public class ProjectTaskController {
 
         return new ResponseEntity<String>("Project Task deleted", HttpStatus.OK);
     }
+
+    @RequestMapping("/change_status")
+    public ResponseEntity<?> addUser(@RequestBody HashMap<String,String> mapper){
+        Long task_id = Long.parseLong(mapper.get("user_id"));
+        int status = Integer.parseInt(mapper.get("status_id"));
+
+        projectTaskService.changeStatus(task_id,status);
+
+        return new ResponseEntity<String>("Status changed", HttpStatus.OK);
+    }
 }

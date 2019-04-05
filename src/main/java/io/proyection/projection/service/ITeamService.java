@@ -13,4 +13,6 @@ public interface ITeamService {
     public Team findById(Long id);
 
     public void delete(Long id);
+
+    public Team addUser(Long user_id, Long team_id);
 }

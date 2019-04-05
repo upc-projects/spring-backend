@@ -67,15 +67,6 @@ public class TeamController {
         Long user_id = Long.parseLong(mapper.get("user_id"));
         Long team_id = Long.parseLong(mapper.get("team_id"));
 
-        User user = userService.findById(user_id);
-        Team team = teamService.findById(team_id);
-
-        List<User> userList = team.getUserList();
-        userList.add(user);
-
-        team.setUserList(userList);
-        teamService.save(team);
-
         return new ResponseEntity<String>("User added", HttpStatus.OK);
     }
 }

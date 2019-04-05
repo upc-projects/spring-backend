@@ -13,4 +13,6 @@ public interface IProjectTaskService {
     public ProjectTask findById(Long id);
 
     public void delete(Long id);
+
+    public ProjectTask changeStatus(Long id_task, int new_status);
 }

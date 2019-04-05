@@ -13,4 +13,3 @@ Then create the `application.properties` inside `src/main/resources` file with t
 `spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect`
 
 
-  

@@ -6,13 +6,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ITeamService {
 
-    public Team save(Team team);
+    Team save(Team team);
 
-    public Iterable<Team> findAll();
+    Iterable<Team> findAll();
 
-    public Team findById(Long id);
+    Team findById(Long id);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public Team addUser(Long user_id, Long team_id);
+    Team addUser(Long user_id, Long team_id);
+
+    Team addTask(Long task_id, Long team_id);
 }

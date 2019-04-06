@@ -4,12 +4,10 @@ import io.proyection.projection.domain.Project;
 import io.proyection.projection.domain.Team;
 import io.proyection.projection.domain.User;
 import io.proyection.projection.repository.ProjectRepository;
-import io.proyection.projection.repository.UserRepository;
 import io.proyection.projection.repository.TeamRepository;
+import io.proyection.projection.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProjectService implements IProjectService{

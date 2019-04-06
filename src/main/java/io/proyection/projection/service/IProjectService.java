@@ -1,6 +1,7 @@
 package io.proyection.projection.service;
 
 import io.proyection.projection.domain.Project;
+import io.proyection.projection.domain.Team;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,4 +16,6 @@ public interface IProjectService {
     public void delete(Long id);
 
     public Project addUser(Long user_id, Long project_id);
+
+    public Team addTeam (Team team, Long project_id);
 }

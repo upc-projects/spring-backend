@@ -1,6 +1,7 @@
 package io.proyection.projection.web;
 
 import io.proyection.projection.domain.Project;
+import io.proyection.projection.domain.Team;
 import io.proyection.projection.service.IProjectService;
 import io.proyection.projection.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,6 +42,13 @@ public class ProjectController {
         Project newProject = projectService.save(project);
 
         return new ResponseEntity<Project>(newProject, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/{id_project}/team")
+    public ResponseEntity<?> addTeamToProject(@Valid @RequestBody Team team, @PathVariable Long id_project){
+
+        Team newTeam = projectService.addTeam(team,id_project);
+        return new ResponseEntity<Team>(newTeam, HttpStatus.CREATED);
     }
 
     @GetMapping("")

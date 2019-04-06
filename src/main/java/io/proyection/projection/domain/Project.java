@@ -1,6 +1,9 @@
 package io.proyection.projection.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,21 +12,30 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="Nombre del proyecto es obligatorio")
+    @NotBlank(message = "Nombre del proyecto es obligatorio")
     private String projectName;
+
     private String projectDescription;
-    @NotNull(message="Fecha de inicio obligatoria")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "start_date")
     private Date startDate;
-    @NotNull(message="Fecha fin obligatoria")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "estimated_end_date")
     private Date estimatedEndDate;
+
     private String createdBy;
     private Date dateCreated;
     private String modifiedBy;

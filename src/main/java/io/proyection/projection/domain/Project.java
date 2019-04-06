@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -14,15 +15,21 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="Nombre del proyecto es obligatorio")
+    @NotBlank(message = "Nombre del proyecto es obligatorio")
     private String projectName;
+
     private String projectDescription;
-    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "start_date")
     private Date startDate;
-    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "estimated_end_date")
     private Date estimatedEndDate;
+
     private String createdBy;
     private Date dateCreated;
     private String modifiedBy;

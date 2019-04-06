@@ -1,5 +1,6 @@
 package io.proyection.projection.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ public class ProjectTask {
     private Date dateCreated;
     private String modifiedBy;
     private Date modifiedDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date limitDate;
     private boolean done = false;
 

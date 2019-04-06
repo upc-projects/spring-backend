@@ -49,6 +49,7 @@ public class ProjectService implements IProjectService{
     public Team addTeam (Team team, Long project_id){
         if(projectRepository.existsById(project_id)){
             Project project = projectRepository.getById(project_id);
+            teamRepository.save(team);
             team.setProject(project);
             project.getTeamList().add(team);
             projectRepository.save(project);

@@ -1,7 +1,10 @@
 package io.proyection.projection.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -15,19 +18,21 @@ public class Project {
     @NotBlank(message="Nombre del proyecto es obligatorio")
     private String projectName;
     private String projectDescription;
-    @NotBlank(message="Fecha de inicio obligatoria")
+    @NotNull(message="Fecha de inicio obligatoria")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date startDate;
-    @NotBlank(message="Fecha fin obligatoria")
+    @NotNull(message="Fecha fin obligatoria")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date estimatedEndDate;
     private String createdBy;
     private Date dateCreated;
     private String modifiedBy;
     private Date modifiedDate;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Team> teamList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> userList;
 
     public Project() {

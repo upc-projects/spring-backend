@@ -1,5 +1,7 @@
 package io.proyection.projection.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -15,9 +17,11 @@ public class Project {
     @NotBlank(message="Nombre del proyecto es obligatorio")
     private String projectName;
     private String projectDescription;
-    @NotBlank(message="Fecha de inicio obligatoria")
+    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "start_date")
     private Date startDate;
-    @NotBlank(message="Fecha fin obligatoria")
+    @JsonFormat(pattern="yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "estimated_end_date")
     private Date estimatedEndDate;
     private String createdBy;
     private Date dateCreated;

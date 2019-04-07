@@ -72,10 +72,10 @@ public class ProjectController {
     @RequestMapping("add_user")
     public ResponseEntity<?> addUser(@RequestBody HashMap<String,String> mapper){
 
-        Long user_id = Long.parseLong(mapper.get("user_id"));
-        Long project_id = Long.parseLong(mapper.get("project_id"));
+        Long userId = Long.parseLong(mapper.get("user_id"));
+        Long projectId = Long.parseLong(mapper.get("project_id"));
 
-        projectService.addUser(user_id,project_id);
+        projectService.addUser(userId,projectId);
 
         return new ResponseEntity<String>("Project added an User", HttpStatus.OK);
     }

@@ -23,11 +23,13 @@ public class User {
     private String email;
     private boolean enabled = true;
 
-    @ManyToMany(mappedBy = "userList")
-    private List<Project> projectList;
+    @OneToMany
+    private List<Task> taskList;
 
-    @ManyToMany(mappedBy = "userList")
-    private List<Team> team;
+
+    public User() {
+    }
+
 
     public Long getId() {
         return id;
@@ -85,19 +87,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public List<Task> getTaskList() {
+        return taskList;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
-    public List<Team> getTeam() {
-        return team;
-    }
-
-    public void setTeam(List<Team> team) {
-        this.team = team;
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 }

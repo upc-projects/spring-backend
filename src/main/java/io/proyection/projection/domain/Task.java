@@ -2,7 +2,6 @@ package io.proyection.projection.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import java.util.Date;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class ProjectTask {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +31,10 @@ public class ProjectTask {
     private boolean done = false;
 
     @ManyToOne
-    @JsonIgnore
-    private Team team;
+    private User user;
 
-    public ProjectTask() {
+
+    public Task() {
     }
 
     public Long getId() {
@@ -102,6 +101,14 @@ public class ProjectTask {
         this.modifiedDate = modifiedDate;
     }
 
+    public Date getLimitDate() {
+        return limitDate;
+    }
+
+    public void setLimitDate(Date limitDate) {
+        this.limitDate = limitDate;
+    }
+
     public boolean isDone() {
         return done;
     }
@@ -110,15 +117,11 @@ public class ProjectTask {
         this.done = done;
     }
 
-    public Team getTeam() {
-        return team;
+    public User getUser() {
+        return user;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public Date getLimitDate(){return limitDate;}
-
-    public void setLimitDate(Date limitDate) { this.limitDate = limitDate; }
 }

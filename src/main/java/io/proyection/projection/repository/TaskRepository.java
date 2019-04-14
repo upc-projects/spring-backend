@@ -1,11 +1,11 @@
 package io.proyection.projection.repository;
 
-import io.proyection.projection.domain.Team;
+import io.proyection.projection.domain.Task;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeamRepository extends CrudRepository<Team, Long> {
+public interface TaskRepository extends CrudRepository<Task, Long> {
 
-    Team getById(Long id);
+    Task getById(Long id);
 }

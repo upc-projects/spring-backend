@@ -2,6 +2,7 @@ package io.proyection.projection.service;
 
 import io.proyection.projection.domain.Task;
 import io.proyection.projection.repository.TaskRepository;
+import io.proyection.projection.repository.UserRepository;
 import io.proyection.projection.utils.StatusType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,17 @@ public class TaskService implements ITaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     public Task save(Task task) {
 
         if (task.getStatus() == NULL) {
             task.setStatus(StatusType.TO_DO.getNumVal());
         }
+
+        // TODO : HOW TO ADD TASK INTO USERS WHEN ADD
 
         return taskRepository.save(task);
     }

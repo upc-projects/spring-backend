@@ -1,18 +1,10 @@
 package io.proyection.projection.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
-import java.util.List;
-
-// TODO : AVOID RECURSION
 
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class User {
+@Table(name = "users")
+public class User extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +16,6 @@ public class User {
     private String lastname;
     private String email;
     private boolean enabled = true;
-
-    @OneToMany
-    private List<Task> taskList;
 
 
     public User() {
@@ -89,11 +78,4 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
 }

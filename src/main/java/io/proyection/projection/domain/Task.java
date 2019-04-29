@@ -1,21 +1,18 @@
 package io.proyection.projection.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 
-// TODO : AVOID RECURSION
-
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class Task {
+@Table(name = "tasks")
+public class Task extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +23,15 @@ public class Task {
     private String acceptanceCriteria;
     private int status;
     private String createdBy;
-    private Date dateCreated;
     private String modifiedBy;
-    private Date modifiedDate;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date limitDate;
     private boolean done = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private User user;
 
 
@@ -80,14 +78,6 @@ public class Task {
         this.createdBy = createdBy;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public String getModifiedBy() {
         return modifiedBy;
     }
@@ -96,13 +86,6 @@ public class Task {
         this.modifiedBy = modifiedBy;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
 
     public Date getLimitDate() {
         return limitDate;

@@ -1,81 +1,57 @@
 package io.proyection.projection.controller;
 
 import io.proyection.projection.domain.Task;
-import io.proyection.projection.exception.ResourceNotFoundException;
-import io.proyection.projection.repository.TaskRepository;
-import io.proyection.projection.repository.UserRepository;
+import io.proyection.projection.service.MapValidationErrorService;
+import io.proyection.projection.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/tasks")
+@CrossOrigin
 public class TaskController {
+    @Autowired
+    private TaskService taskService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private TaskRepository taskRepository;
+    private MapValidationErrorService mapValidationErrorService;
 
 
-    @PostMapping("/users/{userId}/tasks")
-    public Task createTask(@PathVariable(value = "userId") Long userId,
-                           @Valid @RequestBody Task task) {
-        return userRepository.findById(userId).map(user -> {
-            task.setUser(user);
-            return taskRepository.save(task);
-        }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
-    }
+    @PostMapping("")
+    public ResponseEntity<?> createNewtask(@Valid @RequestBody Task task, BindingResult result, Principal principal){
 
-    @GetMapping("/users/{userId}/tasks")
-    public Page<Task> getAllTasksByUserId(@PathVariable(value = "userId") Long userId,
-                                          Pageable pageable) {
-        return taskRepository.findByUserId(userId, pageable);
-    }
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap!=null) return errorMap;
 
-    @GetMapping("/tasks/{taskId}")
-    public Task getTaskById(@PathVariable(value = "taskId") Long taskId) {
-        return taskRepository.getById(taskId);
-    }
-
-    @GetMapping("/tasks")
-    public Page<Task> getAllTasks(Pageable pageable) {
-        return taskRepository.findAll(pageable);
-    }
-
-    @PutMapping("/users/{userId}/tasks/{taskId}")
-    public Task updateTask(@PathVariable(value = "userId") Long userId,
-                           @PathVariable(value = "taskId") Long taskId,
-                           @Valid @RequestBody Task taskRequest) {
-
-        if (!userRepository.existsById(userId)) {
-            throw new ResourceNotFoundException("UserId " + userId + " not found");
-        }
-
-        return taskRepository.findById(taskId).map(task -> {
-
-            task.setSummary(taskRequest.getSummary());
-            task.setStatus(taskRequest.getStatus());
-            task.setAcceptanceCriteria(taskRequest.getAcceptanceCriteria());
-            task.setLimitDate(taskRequest.getLimitDate());
-            task.setModifiedBy(taskRequest.getUser().getUsername());
-            task.setDone(taskRequest.isDone());
-            return taskRepository.save(task);
-        }).orElseThrow(() -> new ResourceNotFoundException("TaskId " + taskId + "not found"));
+        Task task1 = taskService.saveOrUpdateTask(task, principal.getName());
+        return new ResponseEntity<Task>(task1, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/users/{userId}/tasks/{taskId}")
-    public ResponseEntity<?> deleteComment(@PathVariable(value = "userId") Long userId,
-                                           @PathVariable(value = "taskId") Long taskId) {
-        return taskRepository.findByIdAndUserId(taskId, userId).map(task -> {
-            taskRepository.delete(task);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId + " and userId " + userId));
+    @GetMapping("/{taskId}")
+    public ResponseEntity<?> getTaskById(@PathVariable Long taskId, Principal principal){
+
+        Task task = taskService.findTaskById(taskId, principal.getName());
+
+        return new ResponseEntity<Task>(task, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/all")
+    public Iterable<Task> getAlltasks(Principal principal){return taskService.findAllTask(principal.getName());}
+
+
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<?> deletetask(@PathVariable Long taskId, Principal principal){
+        taskService.deleteTaskByIdentifier(taskId, principal.getName());
+
+        return new ResponseEntity<String>("task with ID: '"+taskId+"' was deleted", HttpStatus.OK);
     }
 }

@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class EmailAlreadyExistException extends RuntimeException{
+public class TaskIdException extends RuntimeException {
 
-    public EmailAlreadyExistException(String message) {
+    public TaskIdException(String message) {
         super(message);
     }
 }

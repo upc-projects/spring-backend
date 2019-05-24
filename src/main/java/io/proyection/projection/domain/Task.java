@@ -1,19 +1,18 @@
 package io.proyection.projection.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class ProjectTask {
+@Table(name = "tasks")
+public class Task extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,18 +23,19 @@ public class ProjectTask {
     private String acceptanceCriteria;
     private int status;
     private String createdBy;
-    private Date dateCreated;
     private String modifiedBy;
-    private Date modifiedDate;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date limitDate;
     private boolean done = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Team team;
+    private User user;
 
-    public ProjectTask() {
+
+    public Task() {
     }
 
     public Long getId() {
@@ -78,14 +78,6 @@ public class ProjectTask {
         this.createdBy = createdBy;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public String getModifiedBy() {
         return modifiedBy;
     }
@@ -94,12 +86,13 @@ public class ProjectTask {
         this.modifiedBy = modifiedBy;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+
+    public Date getLimitDate() {
+        return limitDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setLimitDate(Date limitDate) {
+        this.limitDate = limitDate;
     }
 
     public boolean isDone() {
@@ -110,15 +103,11 @@ public class ProjectTask {
         this.done = done;
     }
 
-    public Team getTeam() {
-        return team;
+    public User getUser() {
+        return user;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public Date getLimitDate(){return limitDate;}
-
-    public void setLimitDate(Date limitDate) { this.limitDate = limitDate; }
 }

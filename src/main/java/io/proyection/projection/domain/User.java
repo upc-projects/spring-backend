@@ -1,16 +1,10 @@
 package io.proyection.projection.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class User {
+@Table(name = "users")
+public class User extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +17,10 @@ public class User {
     private String email;
     private boolean enabled = true;
 
-    @ManyToMany(mappedBy = "userList")
-    private List<Project> projectList;
 
-    @ManyToMany(mappedBy = "userList")
-    private List<Team> team;
+    public User() {
+    }
+
 
     public Long getId() {
         return id;
@@ -85,19 +78,4 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
-    }
-
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
-    public List<Team> getTeam() {
-        return team;
-    }
-
-    public void setTeam(List<Team> team) {
-        this.team = team;
-    }
 }

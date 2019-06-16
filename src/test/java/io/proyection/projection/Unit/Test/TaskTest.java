@@ -1,4 +1,4 @@
-package pe.com.core.test.unit.test;
+package io.proyection.projection.Unit.Test;
 
 import io.proyection.projection.domain.Task;
 import io.proyection.projection.domain.User;

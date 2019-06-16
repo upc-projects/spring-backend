@@ -1,16 +1,15 @@
-package pe.com.core.test.unit.test;
+package io.proyection.projection.Unit.Test;
 
-import io.proyection.projection.controller.TaskController;
 import io.proyection.projection.domain.Task;
 import io.proyection.projection.domain.User;
+import io.proyection.projection.service.TaskService;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -24,7 +23,7 @@ public class TaskTest {
     private User user;
 
     @Mock
-    private TaskController taskController;
+    private TaskService taskService;
 
     @BeforeClass //executes one time and one time only
     public static void inicioClase() {
@@ -50,7 +49,7 @@ public class TaskTest {
     @Test
     public void notNullChecker() {
         Assert.assertNotNull(task);
-        Assert.assertNotNull(taskController);
+        Assert.assertNotNull(taskService);
     }
 
     @Test
@@ -60,20 +59,21 @@ public class TaskTest {
             task = new Task();
             task.setCreatedBy("Miguel");
             task.setAcceptanceCriteria(null);
-            task.setCreatedAt(new Date());
             task.setDone(false);
-            task.setId((long) 1);
+            task.setId(1L);
             task.setLimitDate(null);
             task.setModifiedBy("Miguel");
             task.setStatus(0);
             task.setSummary("test");
-            task.setUpdatedAt(new Date());
-            user.setId((long) 2);
+
+            user.setId(2L);
+            user.setUsername("miguelito@gmail.com");
             task.setUser(user);
 
-            when(taskController.createTask(any(), any())).thenReturn(task);
-            Task taskobtenido = taskController.createTask(user.getId(), task);
-            Assert.assertTrue(taskobtenido.getId() > 0);
+            when(taskService.saveOrUpdateTask(any(), any())).thenReturn(task);
+            Task taskObtenido = taskService.saveOrUpdateTask(task, user.getUsername());
+            Assert.assertTrue(taskObtenido.getId() > 0);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,8 +84,27 @@ public class TaskTest {
     public void getAllTasksByUserId() {
         try {
             System.out.println("Metodo obtener todos los task por id");
-            when(taskController.getAllTasksByUserId(any(), any())).thenReturn(any());
-            System.out.println(taskController.getAllTasksByUserId((long) 1, any()));
+
+            task = new Task();
+            task.setCreatedBy("Miguel");
+            task.setAcceptanceCriteria("criteria");
+            task.setDone(false);
+            task.setId(1L);
+            task.setLimitDate(null);
+            task.setModifiedBy("Miguel");
+            task.setStatus(0);
+            task.setSummary("test");
+
+            user.setId(2L);
+            user.setUsername("miguelito@gmail.com");
+            task.setUser(user);
+
+            List<Task> tasks = new ArrayList<>();
+            tasks.add(task);
+
+            when(taskService.findAllTask(any())).thenReturn(tasks);
+            List<Task> tasksObtenidos = (ArrayList<Task>)taskService.findAllTask(user.getUsername());
+            Assert.assertTrue(tasksObtenidos.size() > 0);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,31 +115,21 @@ public class TaskTest {
     public void getTaskById() {
         try {
             System.out.println("Metodo obtener tarea por id");
+
             Task taskbuscada;
             task = new Task();
             task.setSummary("haz tu tarea");
-            task.setId((long) 2);
+            task.setId(2L);
 
-            when(taskController.getTaskById(any())).thenReturn(task);
-            taskbuscada = taskController.getTaskById(task.getId());
+            user.setId(2L);
+            user.setUsername("miguelito@gmail.com");
+            task.setUser(user);
+
+            when(taskService.findTaskById(any(), any())).thenReturn(task);
+            taskbuscada = taskService.findTaskById(2L,user.getUsername());
             Assert.assertNotNull(taskbuscada);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void getAllTasks() {
-        try {
-            System.out.println("Metodo obtener todos los task");
-            Page<Task> tasks = (Page<Task>) task;
-            when(taskController.getAllTasks(any())).thenReturn(tasks);
-            System.out.println(taskController.getAllTasksByUserId((long) 1, any()));
-            when(taskController.getTaskById(any())).thenReturn(task);
-            Assert.assertNotNull(task.getId());
-        } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 
@@ -128,22 +137,26 @@ public class TaskTest {
     public void updateTask() {
         try {
             Task taskBuscado;
-            Task taskEditado = new Task();
-            taskEditado.setAcceptanceCriteria(null);
-            taskEditado.setId((long) 3);
-            taskEditado.setModifiedBy("Miguel");
+            Task taskEditado;
 
             task = new Task();
-            task.setSummary("edita la tarea");
-            task.setId((long) 2);
+            task.setSummary("Edita la tarea");
+            task.setId(2L);
 
-            when(taskController.updateTask(any(), any(), any())).thenReturn(taskEditado);
-            when(taskController.getTaskById(any())).thenReturn(task);
-            task.setId(taskController.updateTask(user.getId(), task.getId(), taskEditado).getId());
-            taskBuscado = taskController.getTaskById(task.getId());
-            System.out.println("Metodo actualizar task");
-            System.out.println(taskBuscado.getId());
+            user.setId(2L);
+            user.setUsername("miguelito@gmail.com");
+            task.setUser(user);
+
+            when(taskService.findTaskById(any(),any())).thenReturn(task);
+            taskBuscado = taskService.findTaskById(2L, user.getUsername());
+
+            task.setSummary("Tarea editada");
+            task.setModifiedBy("Miguel");
+            when(taskService.saveOrUpdateTask(any(), any())).thenReturn(task);
+            taskEditado = taskService.saveOrUpdateTask(task, user.getUsername());
+
             Assert.assertEquals(taskBuscado.getId(), taskEditado.getId());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,13 +167,19 @@ public class TaskTest {
         try {
             task = new Task();
             task.setSummary("Tarea simple");
-            task.setId((long) 3);
+            task.setId(3L);
 
             user = new User();
-            user.setId((long) 4);
-            ResponseEntity<?> taskEliminado;
-            taskEliminado = taskController.deleteComment(user.getId(), task.getId());
-            Assert.assertNull(taskEliminado);
+            user.setId(4L);
+            user.setUsername("miguelito@gmail.com");
+
+            Boolean taskEliminado;
+
+            when(taskService.deleteTaskByIdentifier(any(),any())).thenReturn(true);
+            taskEliminado = taskService.deleteTaskByIdentifier(3L,user.getUsername());
+
+            Assert.assertTrue(taskEliminado);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

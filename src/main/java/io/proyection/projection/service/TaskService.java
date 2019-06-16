@@ -65,8 +65,14 @@ public class TaskService {
     }
 
 
-    public void deleteTaskByIdentifier(Long taskId, String username){
-        taskRepository.delete(findTaskById(taskId, username));
+    public boolean deleteTaskByIdentifier(Long taskId, String username){
+        try{
+            taskRepository.delete(findTaskById(taskId, username));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
 

@@ -15,7 +15,7 @@ public class UserIntegrationTest {
 
 	private final UserService userService = new UserService();
 	private static User user = new User();
-	private String mensaje = "";
+	private String mensaje;
 	private String nombre = "";
 
 	@Mock
@@ -31,8 +31,8 @@ public class UserIntegrationTest {
 	@When("^post method save user is \"([^\"]*)\"$")
 	public void post_method_save_user_is(String arg1) throws Throwable {
 	   try {
-		    userService.saveUser(user);
 		    mensaje = "name is compulsory";
+		    userService.saveUser(user);
 		    Assert.assertTrue(true);
 		} catch (Exception e) {
 			System.out.println("Error: "+e.getMessage());
@@ -41,7 +41,9 @@ public class UserIntegrationTest {
 
 	@Then("^the user recieves the message \"([^\"]*)\"$")
 	public void the_user_recieves_the_message(String arg1) throws Throwable {
-		Assert.assertTrue(mensaje == arg1);
+		System.out.println(arg1);
+		System.out.println(mensaje);
+		Assert.assertEquals(mensaje, arg1);
 	}
 
 	@Given("^user password is \"([^\"]*)\"$")
@@ -54,8 +56,8 @@ public class UserIntegrationTest {
 	@When("^post method save users is \"([^\"]*)\"$")
 	public void post_method_save_users_is(String arg1) throws Throwable {
 		 try {
-			 userService.saveUser(user);
 			 mensaje = "password is compulsory";
+			 userService.saveUser(user);
 			 Assert.assertTrue(true);	
 			} catch (Exception e) {
 				System.out.println("Error: "+e.getMessage());
@@ -65,6 +67,6 @@ public class UserIntegrationTest {
 
 	@Then("^the user recieves the messagesito \"([^\"]*)\"$")
 	public void the_user_recieves_the_messagesito(String arg1) throws Throwable {
-		Assert.assertTrue(mensaje == arg1);
+		Assert.assertEquals(mensaje, arg1);	
 	}
 }
